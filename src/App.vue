@@ -1,24 +1,31 @@
 <template>
   <div id="app">
-
-    <router-view @add-new-movie="addMovieToMovies" />
-  </div>
+    <AddMovie  @add-new-movie="sendNewMovieToMovieList"  />
+    <MovieList :newMovie="newMovie" />
+    </div>
 </template>
 
 <script>
+import AddMovie from "./views/AddMovie";
+import MovieList from "./views/MovieList"
+
 export default {
-  data() {
-    return{
-      movies: [],
-    }
+  components: {
+    AddMovie,
+    MovieList,
   },
 
-  methods: {
-    addMovieToMovies(newMovie) {
-      this.movies.push(newMovie);
-      console.log("In app.vue:", this.movies);
-    }
+data (){
+  return{
+  newMovie: null
   }
+},
+
+methods: {
+  sendNewMovieToMovieList(movie) {
+    this.newMovie = movie;
+  }
+}
 }
 </script>
 
