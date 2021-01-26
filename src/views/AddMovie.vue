@@ -1,20 +1,21 @@
 
 <template>
   <div class="add-movie">
+    <form @submit.prevent="createMovie">
     <div class="title wrapper">
       <label for="title">Title</label>
-      <input id="title" type="text" />
+      <input id="title" type="text" v-model="title" />
     </div>
     <div class="rating wrapper">
       <label for="rating">Rating</label>
       <span>1</span>
-      <input id="rating" type="range" />
+      <input id="rating" type="range" min="1" max="5" v-model="rating"/>
       <span>5</span>
     </div>
     <div class="genre wrapper">
       <label for="genre">Genre</label>
-      <select id="genre" name="genre">
-        <option v-for="(genre, i) in genres" :key="i" value="genre">{{ genre }}</option>
+      <select id="genre" name="genre" v-model="genre">
+        <option v-for="(genre, i) in genres" :key="i" :value="genre">{{ genre }}</option>
       </select>
     </div>
     <div class="desc wrapper">
@@ -24,12 +25,15 @@
         name="description"
         cols="30"
         rows="10"
+        v-model="desc"
       ></textarea>
     </div>
-    <div class="button wrapper">
-      <button>Clear</button>
+    <div>
       <button>Add</button>
-    </div>
+      </div>
+      </form>
+      <button>Clear</button>
+    
   </div>
 </template>
 
@@ -37,6 +41,11 @@
 export default {
   data(){
     return {
+      title: "",
+      rating: "",
+      genre: "",
+      desc: "",
+
       genres: [
         "Drama",
         "Action",
@@ -44,9 +53,21 @@ export default {
         "Fantasy",
         "Reality",
         "Science Fiction"
-      ]
+      ],
+    };
+  },
+    methods: {
+  createMovie() {
+    let newMovie = {
+    title: this.title, 
+    rating: +this.rating, 
+    genre: this.genre, 
+    desc: this.desc
     }
-  }
+
+    this.$emit("add-new-movie", newMovie)
+  },
+  },
 };
 </script>
 
