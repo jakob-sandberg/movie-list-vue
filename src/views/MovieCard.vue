@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-card">
+  <div class="movie-card" @click="deleteMovie">
     <div class="title-rating wrapper">
       <span class="title">{{ movie.title }}</span>
       <span class="rating">{{ movie.rating }}/5</span>
@@ -16,11 +16,19 @@
 <script>
 export default {
   props: ["movie"],
+
+  methods: {
+    deleteMovie() {
+      console.log("To Remove: ", this.movie);
+      this.$emit("removeMovie", this.movie)
+    }
+  }
 };
 </script>
 
 <style scoped>
 .movie-card {
+  cursor: pointer;
   border: 2px solid black;
   border-radius: 10px;
   display: flex;

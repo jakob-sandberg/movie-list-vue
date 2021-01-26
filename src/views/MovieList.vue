@@ -1,7 +1,11 @@
 <template>
   <div class="movie-list">
     <div v-if="movies.length > 0">
-    <MovieCard  v-for="(movie, i) in movies" :key="i" :movie="movie" />
+    <MovieCard 
+     v-for="(movie, i) in movies" 
+     :key="i" 
+     :movie="movie" 
+     @removeMovie="removeMovie" />
   </div>
   </div>
 </template>
@@ -17,6 +21,8 @@ components: {
 
 props: ["newMovie"],
 
+
+
 watch: {
   newMovie: function(newMovie, oldMovie) {
     console.log("old Movie:", oldMovie);
@@ -30,7 +36,7 @@ watch: {
       movies: [{
         title: "Harry P",
         rating: 4,
-        genre: "FANTASY",
+        genre: "Fantasy",
         desc: "Lorem Upsum",
       },
       {
@@ -48,6 +54,10 @@ methods: {
       this.movies.push(newMovie);
       console.log("In App.vue - movies: ", this.movies);
     },
+    removeMovie(movieToRemove) {
+    console.log("In movielist ", movieToRemove);
+    this.movies = this.movies.filter((movie) => movieToRemove !== movie );
+  }
 }
 
 }
